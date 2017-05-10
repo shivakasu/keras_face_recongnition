@@ -7,6 +7,11 @@ data_aug：对原始数据集进行数据增强
 load_face：加载数据集  
 face_train：模型训练及测试  
 
+  
 
-face_model.h5：ORL数据集训练参数，图片尺寸92x112，batch_size = 40, nb_epoch = 40  
-ORL_log：ORL数据集训练及测试输出信息
+face_model_ORL.h5：ORL数据集训练参数，图片尺寸92x112，batch_size = 40, nb_epoch = 40  
+face_model_PIE.h5：ORL数据集训练参数，图片尺寸64x64， batch_size = 40, nb_epoch = 100    
+文件地址：[face-weights](http://pan.baidu.com/s/1pKKn5wR)
+
+ORL_log：ORL数据集训练及测试输出信息  
+PIE_log：PIE数据集训练及测试输出信息

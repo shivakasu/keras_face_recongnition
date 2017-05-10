@@ -1,6 +1,5 @@
 #-*- coding: utf-8 -*-
 import random
-import numpy as np
 from sklearn.cross_validation import train_test_split
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
@@ -10,7 +9,7 @@ from keras.optimizers import SGD
 from keras.utils import np_utils
 from keras.models import load_model
 from keras import backend as K
-from load_face import load_train,load_test
+from load_face import load_train_orl,load_test_orl,load_train_pie,load_test_pie
 
 class Dataset:
     def __init__(self, path_name):
@@ -30,9 +29,9 @@ class Dataset:
     #加载数据集并按照交叉验证的原则划分数据集并进行相关预处理工作
     def load(self, img_rows = 112, img_cols = 92, 
              img_channels = 1, nb_classes = 40):
-        images, labels = load_train(self.path_name)
+        images, labels = load_train_orl(self.path_name)
         train_images, valid_images, train_labels, valid_labels = train_test_split(images, labels, test_size = 0.2, random_state = random.randint(0, 100))        
-        test_images,test_labels = load_test(self.path_name)
+        test_images,test_labels = load_test_orl(self.path_name)
         #当前的维度顺序如果为'th'，则输入图片数据时的顺序为：channels,rows,cols，否则:rows,cols,channels
         #这部分代码就是根据keras库要求的维度顺序重组训练数据集
         if K.image_dim_ordering() == 'th':
@@ -117,7 +116,7 @@ class Model:
         self.model.add(Activation('softmax'))                               #18 分类层，输出最终结果
         
         #输出模型概况
-#        self.model.summary()
+        self.model.summary()
 
 
     def evaluate(self, dataset):
@@ -126,15 +125,14 @@ class Model:
         
         
     #训练模型
-    def train(self, dataset, batch_size = 40, nb_epoch = 40, data_augmentation = False):        
+    def train(self, dataset, batch_size = 40, nb_epoch = 100, data_augmentation = False):        
         sgd = SGD(lr = 0.01, decay = 1e-6, 
                   momentum = 0.9, nesterov = True) #采用SGD+momentum的优化器进行训练，首先生成一个优化器对象  
         self.model.compile(loss='categorical_crossentropy',
                            optimizer=sgd,
                            metrics=['accuracy'])   #完成实际的模型配置工作
         
-        #不使用数据提升，所谓的提升就是从我们提供的训练数据中利用旋转、翻转、加噪声等方法创造新的
-        #训练数据，有意识的提升训练数据规模，增加模型训练量
+        #不使用数据提升
         if not data_augmentation:            
             self.model.fit(dataset.train_images,
                            dataset.train_labels,
@@ -177,13 +175,13 @@ if __name__ == '__main__':
     dataset.load()
     
 #train
-#    model = Model()
-#    model.build_model(dataset)
+    model = Model()
+    model.build_model(dataset)
 #    model.train(dataset)
-#    model.save_model('face_model.h5')
+#    model.save_model('face_model_pie.h5')
     
 #test
-    model = Model()
-    model.load_model(file_path = 'face_model.h5')
-    model.evaluate(dataset)
+#    model = Model()
+#    model.load_model(file_path = 'face_model_pie.h5')
+#    model.evaluate(dataset)
 
