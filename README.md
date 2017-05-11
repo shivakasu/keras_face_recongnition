@@ -10,9 +10,9 @@ face_train_resnet50.py：在resnet50上训练和测试PIE数据集
 
   
 
-face_model_ORL.h5：ORL数据集训练参数，图片尺寸92x112，batch_size = 40, nb_epoch = 40,    正确率99.06%
-face_model_PIE.h5：PIE数据集训练参数，图片尺寸64x64， batch_size = 40, nb_epoch = 100,   正确率98.76%  
-face_model_resnet50.h5：PIE数据集训练参数，图片尺寸64x64， batch_size = 40, nb_epoch = 100,   正确率99.38%  
+face_model_ORL.h5：ORL数据集训练参数，图片尺寸92x112，batch_size = 40, epochs = 40,    正确率99.06%
+face_model_PIE.h5：PIE数据集训练参数，图片尺寸64x64， batch_size = 40, epochs = 100,   正确率98.76%  
+face_model_resnet50.h5：PIE数据集训练参数，图片尺寸64x64， batch_size = 40, epochs = 100,   正确率99.38%  
 文件地址：[face-weights](http://pan.baidu.com/s/1pKKn5wR)
 
 
