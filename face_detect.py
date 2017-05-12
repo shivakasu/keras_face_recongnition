@@ -11,7 +11,7 @@ def CatchUsbVideo(window_name, camera_idx):
     cap = cv2.VideoCapture(camera_idx)                
     
     #告诉OpenCV使用人脸识别分类器
-    classfier = cv2.CascadeClassifier("E:\cs\opencv\sources\data\haarcascades\haarcascade_frontalface_alt2.xml")
+    classfier = cv2.CascadeClassifier("E:\cs\opencv\sources\data\lbpcascades\lbpcascade_frontalface.xml")
     
     #识别出人脸后要画的边框的颜色，RGB格式
     color = (0, 255, 0)

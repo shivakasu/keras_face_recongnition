@@ -27,7 +27,7 @@ def CatchPICFromVideo(window_name, camera_idx, catch_pic_num, path_name):
         grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  #将当前桢图像转换成灰度图像            
         
         #人脸检测，1.2和2分别为图片缩放比例和需要检测的有效点数
-        faceRects = classfier.detectMultiScale(grey, scaleFactor = 1.2, minNeighbors = 3, minSize = (32, 32))
+        faceRects = classfier.detectMultiScale(grey, scaleFactor = 1.2, minNeighbors = 3, minSize = (64, 64))
         if len(faceRects) > 0:          #大于0则检测到人脸                                   
             for faceRect in faceRects:  #单独框出每一张人脸
                 x, y, w, h = faceRect                        
@@ -42,11 +42,8 @@ def CatchPICFromVideo(window_name, camera_idx, catch_pic_num, path_name):
                     break
                 
                 #画出矩形框
-                cv2.rectangle(frame, (x - 10, y - 10), (x + w + 10, y + h + 10), color, 2)
-                
-                #显示当前捕捉到了多少人脸图片了，这样站在那里被拍摄时心里有个数，不用两眼一抹黑傻等着
-                font = cv2.FONT_HERSHEY_SIMPLEX
-                cv2.putText(frame,'num:%d' % (num),(x + 30, y + 30), font, 1, (255,0,255),4)                
+                cv2.rectangle(frame, (x - 10-1, y - 10-1), (x + w + 10+1, y + h + 10+1), color, 1)
+                               
         
         #超过指定最大保存数量结束程序
         if num > (catch_pic_num): break                
@@ -57,7 +54,8 @@ def CatchPICFromVideo(window_name, camera_idx, catch_pic_num, path_name):
         if c & 0xFF == ord('q'):
             break   
         elif c & 0xFF == ord('c'):
-            cv2.imwrite(img_name, image)                                
+            cv2.imwrite(img_name, image)
+            print(num)                              
             num += 1 
     
     #释放摄像头并销毁所有窗口
@@ -65,4 +63,4 @@ def CatchPICFromVideo(window_name, camera_idx, catch_pic_num, path_name):
     cv2.destroyAllWindows() 
     
 if __name__ == '__main__':
-        CatchPICFromVideo("截取人脸", 0, 10, "E:\\project\\pything\\face\\pic")
+        CatchPICFromVideo("catch", 0, 100, "pic")
